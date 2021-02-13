@@ -1,0 +1,188 @@
+\documentclass[10pt,a4paper]{article}
+	% 使用12pt(对应于中文的小四号字)
+	% \usepackage{xeCJK} 
+	% \setmainfont{Times New Roman} 
+	% \setCJKmainfont[BoldFont=Hei]{Hei} 
+    \usepackage{array,ragged2e,pst-node,pst-dbicons}
+	\usepackage{ctex}
+	\usepackage{geometry}   %设置页边距的宏包
+    \usepackage{titlesec}   %设置页眉页脚的宏包
+    \usepackage{amssymb}
+    \usepackage{amsmath}
+    \usepackage{tikz-er2}
+    \usepackage{graphviz}
+    \geometry{left=3.17cm,right=3.17cm,top=2.54cm,bottom=2.54cm}  %设置 上、左、下、右 页边距
+	\begin{document}
+	\newpagestyle{main}{            
+		\sethead{哈尔滨工业大学}{数据库系统\_第三次作业}{1160300314 朱明彦}     %设置页眉
+		% \setfoot{左页脚}{中页脚}{右页脚}      %设置页脚，可以在页脚添加 \thepage  显示页数
+		\setfoot{}{}{\thepage}
+		\headrule                                      % 添加页眉的下划线
+		% \footrule                                       %添加页脚的下划线
+	}
+	\pagestyle{main}    %使用该style
+	\usetikzlibrary{positioning}
+	\usetikzlibrary{shadows}
+	\usetikzlibrary{arrows}
+	\tikzstyle{every entity} = [top color=white, bottom color=blue!30, 
+                            draw=blue!50!black!100, drop shadow]
+	\tikzstyle{every weak entity} = [drop shadow={shadow xshift=.7ex, 
+                                 shadow yshift=-.7ex}]
+	\tikzstyle{every attribute} = [top color=white, bottom color=yellow!20, 
+                               draw=yellow, node distance=1cm, drop shadow]
+	\tikzstyle{every relationship} = [top color=white, bottom color=red!20, 
+                                  draw=red!50!black!100, drop shadow]
+	\tikzstyle{every isa} = [top color=white, bottom color=green!20, 
+                         draw=green!50!black!100, drop shadow]
+
+	% \setlength{\baselineskip}{15.6pt}
+	\setlength{\parskip}{0pt}
+	\renewcommand{\baselinestretch}{1.5}
+	
+	\paragraph{一、}
+	\begin{enumerate}
+		\item \textbf{实体}是ER模型中的基本对象，是现实世界中各种失误的抽象。
+		\item \textbf{属性}是每个实体所拥有的一组特征或性质，实体的属性值是数据库中存储的主要数据。
+		\item \textbf{联系}是不同实体集之间的某种关联，可以使用联系集定义也可以通过实体的属性定义。
+	\end{enumerate}
+	\paragraph{二、}
+	\begin{center}
+		\scalebox{0.75}{
+				\begin{tikzpicture}[node distance=1.5cm, every edge/.style={link}]
+			
+					\node[entity] (customer) {顾客};
+					\node[attribute] (cname) [above=of customer] {姓名} edge (customer);
+					\node[attribute] (cid) [above left=of customer] {\key{社会安全号码}} edge (customer);
+					\node[attribute] (c_tel) [above right=of customer] {电话} edge (customer);
+	
+					\node[relationship] (have) [below=of customer] {拥有} edge node[auto] {1} (customer);
+					\node[entity] (address) [below=of have] {地址} edge node[auto] {m} (have);
+					\node[attribute] (state) [left=of address] {\key{州名}} edge (address);
+					\node[attribute] (city) [above left=of address] {\key{城市}} edge (address);
+					\node[attribute] (street) [below left=of address] {\key{街道}} edge (address);
+					\node[multi attribute] (telephone) [below=of address] {电话} edge (address);
+	
+					% \node[entity] (telephone) [below=of have] {电话} edge node[auto] {n} (have);
+					% \node[attribute] (telephone_number) [below=of telephone] {\key{电话号码}} edge (telephone);
+	
+					\node[relationship] (own) [right=of have] {持有} edge node[auto] {1} (customer);
+					\node[entity] (account) [below=of own] {账户} edge node[auto] {n} (own);
+	
+					\node[attribute] (acc_id) [above right=of account] {\key{号码}} edge (account);
+					\node[attribute] (type) [right=of account] {类型} edge (account);
+					\node[attribute] (incomde) [below right=of account] {收支情况} edge (account);
+					% \node[isa] (isa) [below=1cm of emp] {ISA} edge (emp);
+				  
+					% \node[entity] (mec) [below left=1cm of isa] {Mechanic} edge (isa);
+					% \node[entity] (sal) [below right=1cm of isa] {Salesman} edge (isa);
+				  
+					% \node[relationship] (does) [left=of mec] {Does} edge (mec);
+				  
+					% \node[weak entity] (rep) [below=of does] {RepairJob} edge (does);
+					% \node[attribute] (rnum) [left=of rep] {\discriminator{Number}} edge (rep);
+					% \node[attribute] (desc) [above left=of rep] {Description} edge (rep);
+					% \node[attribute] (cost) [below left=of rep] {Cost} edge (rep);
+					% \node[attribute] (mat) [left=0.5cm of cost] {Parts} edge (cost);
+					% \node[attribute] (work) [below left=0.5cm of cost] {Work} edge (cost);
+				  
+					% \node[ident relationship] (reps) [below=of rep] {Repairs} edge [total] (rep);
+				  
+					% \node[entity] (car) [right=of reps] {Car} edge [<-] (reps);
+					% \node[attribute] (lic) [above=of car] {\key{License}} edge (car);
+					% \node[attribute] (mod) [below=of car] {Model} edge (car);
+					% \node[attribute] (year) [below right=of car] {Year} edge (car);
+					% \node[attribute] (manu) [below left=1.5cm of car] {Manufacturer} edge (car);
+					
+					% \node[relationship] (buy) [below=of sal] {Buys};
+					% \node[attribute] (pri) [above left=of buy] {Price} edge (buy);
+					% \node[attribute] (sdate) [left=of buy] {Date} edge (buy);
+					% \node[attribute] (bval) [below left=of buy] {Value} edge (buy);
+				  
+					% \node[relationship] (sel) [right=of buy] {Sells};
+					% \node[attribute] (sdate) [above right=of sel] {Date} edge (sel);
+					% \node[derived attribute] (sval) [right=of sel] {Value} edge (sel);
+					% \node[attribute] (com) [below right=of sel] {Comission} edge (sel);
+					
+					% \draw[link] (car.10) -| (buy) (buy) edge (sal);
+					% \draw[link] (car.-10) -| (sel) (sel) |- (sal);
+				  
+					% \node[entity] (cli) [below right=0.5cm and 3.7cm of car] {Client};
+					% \node[attribute] (cid) [right=of cli] {\key{ID}} edge (cli);
+					% \node[attribute] (cname) [below left=of cli] {Name} edge (cli);
+					% \node[multi attribute] (cphone) [below right=of cli] {Phone} edge (cli);
+					% \node[attribute] (cadd) [below=of cli] {Address} edge (cli);
+				  
+					% \draw[link] (cli.70) |- node [pos=0.05, auto, swap] {buyer} (sel);
+					% \draw[link] (cli.110) |- node [pos=0.05, auto] {seller} (buy);
+				  
+				  \end{tikzpicture}	  
+			}
+	
+		\end{center}
+	\begin{enumerate} 
+		\item ER图如上所示。
+		\item 转化得到的关系模式如下所示：
+		\begin{itemize}
+			\item \texttt{顾客(\underline{社会安全号码}，姓名，电话)}
+			\item \texttt{顾客地址(\underline{社会安全号码}，城市，州名，街道)}
+			\item \texttt{地址(\underline{城市}，\underline{州名}，\underline{街道})}
+			\item \texttt{地址电话(\underline{城市}， \underline{州名}，\underline{街道}，电话)}
+			\item \texttt{账户(\underline{号码}，社会安全号码，类型，收支情况)}
+		\end{itemize}
+		\item \begin{enumerate}
+			\item 对于顾客表，其主键为社会安全号码，不能为空且可以唯一标示一个顾客实体。
+			\item 对于顾客地址表，其主键为社会安全号码，城市、州名和街道是相对于表地址电话的外键，其在地址电话表中必须存在。
+			\item 对于地址表，其主键为城市、州名和街道，不为空且可以唯一标示一个地址实体。
+			\item 对于地址电话表，其主键城市、州名和街道，不能为空且可以唯一标示一个地址实体，外键为城市、州名和街道相对于地址表，其在地址表中必须存在。
+			\item 对于账户表，其主键为号码不能为空，且可以唯一标示一个账户实体，社会安全号码为相对于顾客表的外键，其在顾客表中必须存在。
+		\end{enumerate}
+	\end{enumerate}
+	\newpage
+    \paragraph{三、}
+	\begin{center}
+		\scalebox{0.75}{
+			\begin{tikzpicture}[node distance=1.5cm, every edge/.style={link}]
+			
+				\node[relationship] (sale) {销售};
+				\node[attribute] (month_sales) [above=of sale] {月销售量} edge (sale);
+				\node[entity] (shop) [left=of sale]{商店} edge node[above] {m} (sale);
+				\node[entity] (goods) [right=of sale] {商品} edge node[above] {n} (sale);
+
+				\node[attribute] (s_id) [above left=of shop] {\key{商店编号}} edge (shop);
+				\node[attribute] (s_name) [left=of shop] {商店名} edge (shop);
+				\node[attribute] (s_add) [below left=of shop] {地址} edge (shop);
+				\node[attribute] (g_id) [above right=of goods] {\key{商品号}} edge (goods);
+				\node[attribute] (g_name) [right=of goods] {商品名} edge (goods);
+				\node[attribute] (g_size) [below right=of goods] {规格} edge (goods);
+				\node[attribute] (g_prize) [below=of g_size] {单价} edge (goods);
+
+				\node[relationship] (work) [below=of sale] {聘用} edge node[auto] {1} (shop);
+				\node[attribute] (work_longth) [left=of work] {聘期} edge (work);
+				\node[attribute] (salary) [right=of work] {月薪} edge (work);
+				\node[entity] (worker) [below=of work] {职工} edge node[auto] {n} (work);
+
+				\node[attribute] (w_id) [left=of worker] {\key{职工编号}} edge (worker);
+				\node[attribute] (w_name) [below left=of worker] {姓名} edge (worker);
+				\node[attribute] (w_sex) [below right=of worker] {性别} edge (worker);
+				\node[attribute] (w_sale) [right=of worker] {业绩} edge (worker);
+			  \end{tikzpicture}	  
+		}
+	\end{center}
+	\begin{enumerate}
+		\item ER图如上所示。
+		\item 将ER图转换为关系模式，如下所示
+		\begin{enumerate}
+			\item \texttt{商店(\underline{商店编号}, 商店名, 地址)}
+			\item \texttt{商品(\underline{商品号}, 商品名, 规格, 单价)}
+			\item \texttt{职工(\underline{职工编号}, \underline{商店编号}, 姓名, 性别, 业绩, 月薪, 聘期)}
+			\item \texttt{销售量(\underline{商店编号}, \underline{商品号}, 月销售量)}
+		\end{enumerate}
+		\item \begin{enumerate}
+			\item 对于商店表，主键为商店编号。
+			\item 对于商品表，主键为商品号。
+			\item 对于职工表，主键为商店编号和职工编号, 其外键为商店编号相对于商店表。
+			\item 对于销售量， 主键为商店编号和商品号。
+		\end{enumerate}
+	\end{enumerate}
+
+\end{document}
