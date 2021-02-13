@@ -162,13 +162,13 @@ TODO : github 不支持 [toc] 目录 , 有时间去网上找一个自动生成�
 
 - INSERT 与 select 结合使用
 
-  <img src="image-20210208135013506.png" alt="image-20210208135013506" style="zoom:50%;" />
+  <img src="https://gitee.com/kevinzhang1999/my-picture/raw/master/uPic/image-20210208135013506-1613200846877.png" alt="image-20210208135013506" style="zoom:50%;" />
 
 - DELETE与 UPDATE
 
   - delete 删除表中的元祖
 
-    <img src="image-20210208135124784.png" alt="image-20210208135124784" style="zoom:50%;" />
+    <img src="https://gitee.com/kevinzhang1999/my-picture/raw/master/uPic/image-20210208135124784-1613200861185.png" alt="image-20210208135124784" style="zoom:50%;" />
 
   - update 更新数据
 
