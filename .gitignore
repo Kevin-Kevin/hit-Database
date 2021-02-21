@@ -5,3 +5,7 @@
 # VS Code files #
 #################
 .vscode
+# 忽略所有以 . 开始的文件
+.* 
+# 不忽略 git ignore
+!.gitignore
